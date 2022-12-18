@@ -1,0 +1,33 @@
+.form {
+    margin: auto;
+    width: 50%;
+    border: 3px solid lightgray;
+    padding: 10px;
+}
+
+.form input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#submit{
+    background-color: var(--variation);
+    color: white;
+}
+
+#fnmae{
+    width: 40%;
+}
+#lnmae{
+    width: 40%;
+}
+#house{
+    width: 20%;
+}
+#plz{
+    width: 30%;
+}
