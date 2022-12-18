@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Logout{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post" class="form">
+    <input id="cancel" type="button" value="Abbrechen" onclick="window.history.back()">
+    <input id="logout" type="submit" value="Logout">
+</form>
+{% endblock %}

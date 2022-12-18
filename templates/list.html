@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Liste {{id}}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form action="/list" method="post" style="text-align: right;"><input id="print" type="submit" value="Drucken" name="print"></form>
+  <table>
+    <tr><th>Id</th><th class="required">Artikelname</th><th class="required">Preis</th><th>Größe</th><th></th></tr>
+    {% for article in articles %}<tr><td>{{article.lid}}</td><td>{{article.name}}</td><td>{{article.price}}</td><td>{{article.size}}</td><td><form action="/list" method="post"><input type="submit" value="Löschen" name="delete"><input type="hidden" name="articleid" value="{{article.gid}}"></form></td></tr>
+{% endfor %}
+    <tr><form action="/list" method="post"><td></td><td class="input"><input type="text" name="aname" id="aname"  placeholder="Artikelname"></td><td class="input"><input type="text" name="price" id="price" placeholder="Preis"></td><td class="input"><input type="text" name="size" id="size" placeholder="Größe"></td><td><input type="submit" value="Speichern" name="save"></td></form></tr>
+  </table>
+{% endblock %}

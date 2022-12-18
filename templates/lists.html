@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Meine Listen{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<article class="listcontainer">
+    {% for list in lists %}<div id="td{{list}}" class="list"><a href="list?id={{list}}" style="display:inline-block;width: 100%;"><h3>Liste {{list}}</h3></a></div><br>{% endfor %}
+</article>
+<script>
+  var lists = document.getElementsByClassName("list");
+  for (let i = 0; i < lists.length; i++) {
+    if (i % 2 == 0) {
+      lists.item(i).className += " var";
+    }
+  }
+</script>
+<form action="/lists" method="post">
+  <input type="submit" id="newlist" class="{% if user.may_create_new_list %}enabled{% else %}disabled{% endif %}" name="newlist" {% if user.may_create_new_list %}{% else %}disabled="true"{% endif %} value="Neue Liste"></input>
+</form>
+{% endblock %}

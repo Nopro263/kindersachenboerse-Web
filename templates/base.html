@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename=request.path[1:]+'.css')}}">
+    <title>{% block title %}{% endblock %}|Kindersachenbörse</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav id="nav" class="nav">
+        <a href="/" {% if request.path == '/' %}class="active"{% endif %}>Startseite</a>
+        <a href="/lists" {% if request.path == '/lists' %}class="active"{% endif %}>Meine Listen</a>
+        {% if user.may_see_admin %}
+        <a href="/admin" {% if request.path == '/admin' %}class="active"{% endif %}>Admin</a>
+        {% endif %}
+        <a href="/{% if user.logged_in %}logout{% else %}login{% endif %}" {% if user.logged_in %}class="active"{% endif %} {% if request.path == '/login' or request.path == '/logout' %}class="active"{% endif %}>{% if user.logged_in %}Logout{% else %}Login{% endif %}</a>
+        {% if not user.logged_in %}<a href="/register" {% if request.path == '/register' %}class="active"{% endif %}>Registrieren</a>{% endif %}
+        <a href="javascript:void(0);" class="icon" onclick="togglemenu()">
+            <p class="bar-menu">o</p>
+        </a>
+        {% if user.logged_in %}<div style="text-align: right;"><p>Guten Tag, <br>{{user.dpname}}</p></div>{% endif %}
+    </nav>
+    <script>
+        function togglemenu() {
+          var nav = document.getElementById("nav");
+          if (nav.className === "nav") {
+            nav.className += " r";
+          } else {
+            nav.className = "nav";
+          }
+        }
+        </script>
+        {% if request.args['info'] %}
+        <div class="info">{{ request.args['info']|e }}</div>
+        {% endif %}
+        {% for message in errors %}
+        <div class="alert">{{ message|e }}</div>
+        {% endfor %}
+        {% for message in infos %}
+        <div class="info">{{ message|e }}</div>
+        {% endfor %}
+        <header>
+          {% block header %}{% endblock %}
+        </header>
+        {% block content %}{% endblock %}
+</body>
+</html>

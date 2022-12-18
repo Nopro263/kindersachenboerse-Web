@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Registrieren{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="form">
+    <label for="username">Kennwort</label>
+    <input name="username" id="username" required>
+    <br>
+    <label for="email">E-Mail</label>
+    <input type="text" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+    <br>
+    <label for="fname">Vorname</label>
+    <input type="text" name="fname" id="fnmae" required>
+    <label for="lname">Nachname</label>
+    <input type="text" name="lname" id="lnmae" required>
+    <br>
+    <label for="teln">Telefonnummer</label>
+    <input type="tel" name="teln" id="teln" required>
+    <br>
+    <label for="street">Straße</label>
+    <input type="text" name="street" id="street" required>
+    <br>
+    <label for="house">Nr.</label>
+    <input type="text" name="house" id="house" required>
+    <label for="plz">PLZ</label>
+    <input type="text" name="plz" id="plz" required>
+    <br>
+    <input id="submit" type="submit" value="Registrieren">
+  </form>
+{% endblock %}
