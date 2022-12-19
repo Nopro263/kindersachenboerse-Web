@@ -56,6 +56,8 @@ def AR_resetpassword():
 @app.route('/login', methods=['POST'])
 def ARI_login():
     lo = db.login(request.form.get('username'), request.form.get('password'))
+    if(not db.getuser(lo).verified):
+        return render_template('login.html', user=db.getuser(request.cookies.get('session')), errors=['Bitte verifizieren sie sich!'])
     if(lo == None):
         r = render_template('login.html', user=db.getuser(request.cookies.get('session')), errors=['Falscher Benutzer oder Passwort!'])
     else:

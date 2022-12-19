@@ -7,7 +7,6 @@ from Config import CONFIG
 import string
 import random
 
-
 users = {
     'admin': ('password', 'admin@service.net', 'Admin', 'Mustername', '0123 123456', 'street', '8', '1234', True),
     'user': ('user', 'ab@cd.ef', 'Noah', 'Rottermanner', '', '', '', '', False)
@@ -21,11 +20,13 @@ articles = {
     1: [Article(1, 'name', 'groesse', 'preis'), Article(2, 'name2', 'groesse2', 'preis2')]
 }
 
+
 class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():
             if sess == session:
-                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
+                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user,
+                            users[user][8])
         return SessionUser()
 
     def login(self, username, password):
