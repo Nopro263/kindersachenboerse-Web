@@ -21,7 +21,6 @@ articles = {
     1: [Article(1, 'name', 'groesse', 'preis'), Article(2, 'name2', 'groesse2', 'preis2')]
 }
 
-
 class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():

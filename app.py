@@ -4,12 +4,11 @@ from flask import request
 from flask import Response
 
 from Config import load
+load("config.json")
 from TestDb import TestDb
 
 app = Flask(__name__)
 db = TestDb()
-
-load("config.json")
 
 @app.route('/')
 def AR_index():  # put application's code here
