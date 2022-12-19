@@ -3,11 +3,13 @@ from flask import render_template
 from flask import request
 from flask import Response
 
-from SessionUser import SessionUser
+from Config import load
 from TestDb import TestDb
 
 app = Flask(__name__)
 db = TestDb()
+
+load("config.json")
 
 @app.route('/')
 def AR_index():  # put application's code here

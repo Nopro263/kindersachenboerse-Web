@@ -4,3 +4,4 @@ class SessionUser:
     logged_in = False
     dpname = ""
     username = ""
+    verified = False

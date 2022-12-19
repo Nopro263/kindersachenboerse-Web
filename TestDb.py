@@ -2,20 +2,15 @@ from Article import Article
 from Db import Db
 from SessionUser import SessionUser
 from User import User
+from Config import CONFIG
 
 import string
 import random
 
-# Config start
-
-ADMIN = ['admin']
-MAXLIST = 5
-
-# Config end
 
 users = {
-    'admin': ('password', 'admin@service.net', 'Admin', 'Mustername', '0123 123456', 'street', '8', '1234'),
-    'user': ('user', 'ab@cd.ef', 'Noah', 'Rottermanner', '', '', '', '')
+    'admin': ('password', 'admin@service.net', 'Admin', 'Mustername', '0123 123456', 'street', '8', '1234', True),
+    'user': ('user', 'ab@cd.ef', 'Noah', 'Rottermanner', '', '', '', '', False)
 }
 sessions = {}
 lists = {
@@ -31,7 +26,7 @@ class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():
             if sess == session:
-                return User(users[user][2], user in ADMIN, len(lists[user]) < MAXLIST, user)
+            return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
         return SessionUser()
 
     def login(self, username, password):
