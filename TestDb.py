@@ -25,8 +25,7 @@ class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():
             if sess == session:
-                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user,
-                            users[user][8])
+                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
         return SessionUser()
 
     def login(self, username, password):
@@ -35,7 +34,7 @@ class TestDb(Db):
 
         sessions[username] = "".join([random.choice(string.ascii_letters) for x in range(10)])
         print(sessions[username])
-        return sessions[username].encode()
+        return sessions[username]
 
     def getlists(self, user):
         if user.username in lists:

@@ -56,8 +56,8 @@ def AR_resetpassword():
 @app.route('/login', methods=['POST'])
 def ARI_login():
     lo = db.login(request.form.get('username'), request.form.get('password'))
-    if(not db.getuser(lo).verified):
-        return render_template('login.html', user=db.getuser(request.cookies.get('session')), errors=['Bitte verifizieren sie sich!'])
+    if not db.getuser(lo).verified:
+        return render_template('login.html', user=db.getuser(request.cookies.get('session')), infos=['Bitte verifizieren sie sich!'])
     if(lo == None):
         r = render_template('login.html', user=db.getuser(request.cookies.get('session')), errors=['Falscher Benutzer oder Passwort!'])
     else:
@@ -78,6 +78,7 @@ def ARI_resetpassword():
 @app.route('/register', methods=['POST'])
 def ARI_register():
     return b'<meta http-equiv="refresh" content="0; url=login?info=Email%20gesendet,%20bitte%20folgen%20Sie%20den%20Anweisungen%20im%20Email">'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
