@@ -26,7 +26,7 @@ class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():
             if sess == session:
-            return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
+                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
         return SessionUser()
 
     def login(self, username, password):
