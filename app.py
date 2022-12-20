@@ -28,9 +28,9 @@ def AR_list():
     if user.logged_in:
         articles = db.getlist(user, request.args.get('id'))
         if(articles == None):
-            return render_template('list.html', user=user, articles=[], errors=['Diese Liste existiert nicht'])
-        return render_template('list.html', user=user, articles=articles)
-    return render_template('list.html', user=user, articles=[], errors=['Du musst eingeloggt sein um deine Liste zu sehen'])
+            return render_template('list.html', user=user, articles=[], errors=['Diese Liste existiert nicht'], id=request.args.get('id'))
+        return render_template('list.html', user=user, articles=articles, id=request.args.get('id'))
+    return render_template('list.html', user=user, articles=[], errors=['Du musst eingeloggt sein um deine Liste zu sehen'], id=request.args.get('id'))
 
 @app.route('/login')
 def AR_login():
@@ -56,13 +56,14 @@ def AR_resetpassword():
 @app.route('/login', methods=['POST'])
 def ARI_login():
     lo = db.login(request.form.get('username'), request.form.get('password'))
-    if not db.getuser(lo).verified:
-        return render_template('login.html', user=db.getuser(request.cookies.get('session')), infos=['Bitte verifizieren sie sich!'])
     if(lo == None):
         r = render_template('login.html', user=db.getuser(request.cookies.get('session')), errors=['Falscher Benutzer oder Passwort!'])
     else:
         r = Response(b'<meta http-equiv="refresh" content="0; url=lists">')
         r.set_cookie("session", lo)
+        if not db.getuser(lo).verified:
+            return render_template('login.html', user=db.getuser(request.cookies.get('session')),
+                                   infos=['Bitte verifizieren sie sich!'])
     return r
 
 @app.route('/logout', methods=['POST'])
@@ -79,6 +80,20 @@ def ARI_resetpassword():
 def ARI_register():
     return b'<meta http-equiv="refresh" content="0; url=login?info=Email%20gesendet,%20bitte%20folgen%20Sie%20den%20Anweisungen%20im%20Email">'
 
+@app.route('/lists', methods=['POST'])
+def ARI_lists():
+    db.createlist(db.getuser(request.cookies.get('session')))
+    return AR_lists()
+
+@app.route('/list', methods=['POST'])
+def ARI_list():
+    if request.form.get('save'):
+        db.createarticle(db.getuser(request.cookies.get('session')), request.form.get('aname'), request.form.get('price'), request.form.get('size'), request.form.get('lid'))
+        return AR_list()
+    elif request.form.get('delete'):
+        db.deletearticle(db.getuser(request.cookies.get('session')), request.form.get('listid'), request.form.get('articleid'))
+        #print(request.form.get('articleid'), request.form.get('listid'))
+        return AR_list()
 
 if __name__ == '__main__':
     app.run(debug=True)

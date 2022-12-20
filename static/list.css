@@ -2,6 +2,11 @@ table {
     width: 100%;
 }
 
+.deleted {
+    background-color: var(--error);
+    text-decoration: line-through;
+}
+
 tr {
     background-color: white;
 }

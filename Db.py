@@ -7,8 +7,6 @@ class Db:
         pass
 
     def getuser(self, session):
-        if(session):
-            return User()
         return SessionUser()
 
     def getlists(self, user):
@@ -24,4 +22,13 @@ class Db:
         return
 
     def register(self, username, email, fname, lname, teln, street, house, plz):
+        return
+
+    def createlist(self, user):
+        return
+
+    def createarticle(self, user, name, price, size, list):
+        return
+
+    def deletearticle(self, user, list, article):
         return

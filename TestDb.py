@@ -17,15 +17,18 @@ lists = {
     'user': []
 }
 articles = {
-    1: [Article(1, 'name', 'groesse', 'preis'), Article(2, 'name2', 'groesse2', 'preis2')]
+    1: [Article(1, 'name', 'groesse', 'preis', False), Article(2, 'name2', 'groesse2', 'preis2', False)]
 }
+
+nextlist = 2
 
 
 class TestDb(Db):
     def getuser(self, session):
         for user, sess in sessions.items():
             if sess == session:
-                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user, users[user][8])
+                return User(users[user][2], user in CONFIG['ADMINS'], len(lists[user]) < CONFIG['MAXLIST'], user,
+                            users[user][8])
         return SessionUser()
 
     def login(self, username, password):
@@ -49,3 +52,22 @@ class TestDb(Db):
             return articles[list]
         except:
             return None
+
+    def createlist(self, user):
+        global nextlist
+        if user.username in lists and len(lists[user.username]) < CONFIG['MAXLIST']:
+            lists[user.username].append(nextlist)
+            articles[nextlist] = []
+            nextlist += 1
+
+    def createarticle(self, user, name, price, size, list):
+            if user.username in lists and len(lists[user.username]) > int(list) - 1:
+                glist = lists[user.username][int(list) - 1]
+                articles[glist].append(Article(len(articles[glist]) + 1, name, size, price, False))
+            else:
+                print(len(lists[user.username]), int(list) - 1)
+
+    def deletearticle(self, user, list, article):
+        if user.username in lists and len(lists[user.username]) > int(list) - 1:
+            glist = lists[user.username][int(list) - 1]
+            articles[glist][int(article) - 1].delete()
