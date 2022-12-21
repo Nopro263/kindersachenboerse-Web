@@ -63,6 +63,9 @@ class TestDb(Db):
     def createarticle(self, user, name, price, size, list):
             if user.username in lists and len(lists[user.username]) > int(list) - 1:
                 glist = lists[user.username][int(list) - 1]
+                print(len(articles[glist]), CONFIG['MAXARTICLES'])
+                if len(articles[glist]) > CONFIG['MAXARTICLES'] - 1:
+                    return
                 articles[glist].append(Article(len(articles[glist]) + 1, name, size, price, False))
             else:
                 print(len(lists[user.username]), int(list) - 1)
@@ -71,3 +74,10 @@ class TestDb(Db):
         if user.username in lists and len(lists[user.username]) > int(list) - 1:
             glist = lists[user.username][int(list) - 1]
             articles[glist][int(article) - 1].delete()
+
+    def register(self, username, email, fname, lname, teln, street, house, plz):
+        users[username] = ('password', email, fname, lname, teln, street, house, plz, False)
+        lists[username] = []
+
+    def setpassword(self, user, password):
+        users[user.username] = (password, *users[user.username][1:-1], True)

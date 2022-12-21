@@ -32,3 +32,6 @@ class Db:
 
     def deletearticle(self, user, list, article):
         return
+
+    def setpassword(self, user, password):
+        return

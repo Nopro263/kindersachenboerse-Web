@@ -1,4 +1,5 @@
 {
   "MAXLIST": 5,
+  "MAXARTICLES": 2,
   "ADMINS": ["admin"]
 }

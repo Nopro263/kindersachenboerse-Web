@@ -51,6 +51,10 @@ def AR_register():
 def AR_resetpassword():
     return render_template('resetpassword.html', user=db.getuser(request.cookies.get('session')))
 
+@app.route('/setpassword')
+def AR_setpassword():
+    return render_template('setpassword.html', user=db.getuser(request.cookies.get('session')))
+
 
 
 @app.route('/login', methods=['POST'])
@@ -78,6 +82,7 @@ def ARI_resetpassword():
 
 @app.route('/register', methods=['POST'])
 def ARI_register():
+    db.register(request.form.get('username'), request.form.get('email'), request.form.get('fname'), request.form.get('lname'), request.form.get('teln'), request.form.get('street'), request.form.get('house'), request.form.get('plz'))
     return b'<meta http-equiv="refresh" content="0; url=login?info=Email%20gesendet,%20bitte%20folgen%20Sie%20den%20Anweisungen%20im%20Email">'
 
 @app.route('/lists', methods=['POST'])
@@ -94,6 +99,7 @@ def ARI_list():
         db.deletearticle(db.getuser(request.cookies.get('session')), request.form.get('listid'), request.form.get('articleid'))
         #print(request.form.get('articleid'), request.form.get('listid'))
         return AR_list()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
