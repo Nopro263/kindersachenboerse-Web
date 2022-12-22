@@ -100,6 +100,10 @@ def ARI_list():
         #print(request.form.get('articleid'), request.form.get('listid'))
         return AR_list()
 
+@app.route('/setpassword', methods=['POST'])
+def ARI_setpassword():
+    db.setpassword(request.args.get('key') , request.form.get('password'))
+    return b'<meta http-equiv="refresh" content="0; url=login?info=Passwort%20erfolgreich%20gesetzt">'
 
 if __name__ == '__main__':
     app.run(debug=True)
